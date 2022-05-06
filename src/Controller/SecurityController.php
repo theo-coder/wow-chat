@@ -25,7 +25,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $role = \str_ends_with($user->getEmail(), "@insider.fr") ? ["ROLE_INSIDER"] : (\str_ends_with($user->getEmail(), "@collaborator.fr") ? ["ROLE_COLLABORATOR"] : (\str_ends_with($user->getEmail(), "@external.fr") ? ["ROLE_EXTERNAL"] : ["ROLE_USER"]));
+            $role = \str_ends_with($user->getEmail(), "@insider.fr") ? ["ROLE_INSIDER"] : (\str_ends_with($user->getEmail(), "@collaborator.fr") ? ["ROLE_COLLABORATOR"] : (\str_ends_with($user->getEmail(), "@external.fr") ? ["ROLE_EXTERNAL"] : []));
 
             $user->setRoles($role);
 
