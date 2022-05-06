@@ -1,3 +1,8 @@
+/**** THEME ****/
+:root {
+    --color-primary: #00a8f3;
+}
+
 /**** NEGATIVE MARGIN ****/
 .mt-n1 { margin-top: -0.25rem; }
 .mt-n2 { margin-top: -0.5rem; }
@@ -5,5 +10,12 @@
 .mt-n4 { margin-top: -1.5rem; }
 .mt-n5 { margin-top: -3rem; }
 
+/**** MENU ****/
 .navbar-dark .navbar-nav .nav-link.active,
-.navbar-dark .navbar-nav .show>.nav-link { color: #00a8f3; }
+.navbar-dark .navbar-nav .show>.nav-link { color: var(--color-primary); }
+
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--color-primary);
+    filter: brightness(.8);
+}
