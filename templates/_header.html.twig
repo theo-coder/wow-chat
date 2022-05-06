@@ -11,7 +11,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link {{ currentPath == 'app_index' ? 'active' : '' }}" aria-current="page" href="{{ path('app_index') }}">Home</a>
+                <a class="nav-link {{ currentPath == 'app_register' ? 'active' : '' }}" aria-current="page" href="{{ path('app_register') }}">Inscription</a>
+                <a class="nav-link {{ currentPath == 'app_login' ? 'active' : '' }}" aria-current="page" href="{{ path('app_login') }}">Connexion</a>
+                <a class="nav-link {{ currentPath == 'app_logout' ? 'active' : '' }}" aria-current="page" href="{{ path('app_logout') }}">Déconnexion</a>
             </div>
         </div>
     </div>
