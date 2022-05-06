@@ -10,12 +10,24 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav me-auto">
+                <a class="nav-link {{ currentPath == 'app_index' ? 'active' : '' }}" aria-current="page" href="{{ path('app_index') }}">Home</a>
+            </div>
+            <div class="navbar-nav me-3">
                 {% if not app.user %}
-                    <a class="nav-link {{ currentPath == 'app_register' ? 'active' : '' }}" aria-current="page" href="{{ path('app_register') }}">Inscription</a>
-                    <a class="nav-link {{ currentPath == 'app_login' ? 'active' : '' }}" aria-current="page" href="{{ path('app_login') }}">Connexion</a>
+                    <a class="nav-link {{ currentPath == 'app_register' ? 'active' : '' }}" aria-current="page" href="{{ path('app_register') }}">
+                        <img src="{{ asset('images/register.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top">
+                        Inscription
+                    </a>
+                    <a class="nav-link {{ currentPath == 'app_login' ? 'active' : '' }}" aria-current="page" href="{{ path('app_login') }}">
+                        <img src="{{ asset('images/login.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top">
+                        Connexion
+                    </a>
                 {% else %}
-                    <a class="nav-link {{ currentPath == 'app_logout' ? 'active' : '' }}" aria-current="page" href="{{ path('app_logout') }}">Déconnexion</a>
+                    <a class="nav-link {{ currentPath == 'app_logout' ? 'active' : '' }}" aria-current="page" href="{{ path('app_logout') }}">
+                        <img src="{{ asset('images/disconnect.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top">
+                        Déconnexion
+                    </a>
                 {% endif %}
             </div>
         </div>
