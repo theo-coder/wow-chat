@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "À propos" ~ parent() }}{% endblock %}
+
+{% block body %}
+    <audio src="{{ asset('sounds/wow.mp3') }}" autoplay="autoplay" loop="loop"></audio>
+
+    <h1 class="text-center mt-3">Vous aussi soyez WOW !</h1>
+{% endblock %}
+
+
