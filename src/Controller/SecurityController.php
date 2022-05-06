@@ -24,6 +24,11 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $role = \str_ends_with($user->getEmail(), "@insider.fr") ? ["ROLE_INSIDER"] : (\str_ends_with($user->getEmail(), "@collaborator.fr") ? ["ROLE_COLLABORATOR"] : (\str_ends_with($user->getEmail(), "@external.fr") ? ["ROLE_EXTERNAL"] : ["ROLE_USER"]));
+
+            $user->setRoles($role);
+
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
