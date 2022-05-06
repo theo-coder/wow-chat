@@ -4,3 +4,6 @@
 .mt-n3 { margin-top: -1rem; }
 .mt-n4 { margin-top: -1.5rem; }
 .mt-n5 { margin-top: -3rem; }
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .show>.nav-link { text-decoration: underline; }
