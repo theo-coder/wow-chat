@@ -19,3 +19,6 @@
     color: var(--color-primary);
     filter: brightness(.8);
 }
+
+/**** IMAGE ****/
+.img-white { filter: saturate(0) brightness(2); }

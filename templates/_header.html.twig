@@ -24,6 +24,12 @@
                         Connexion
                     </a>
                 {% else %}
+                    <div class="navbar-nav">
+                        <a class="nav-link {{ currentPath == 'admin_index' ? 'active' : '' }}" aria-current="page" href="{{ path('admin_index') }}">
+                            <img src="{{ asset('images/admin.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top">
+                            Administration
+                        </a>
+                    </div>
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             Connecté en tant que {{ app.user.pseudo }}
@@ -31,6 +37,7 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li>
                                 <a class="dropdown-item" href="{{ path('app_change_password') }}">
+                                    <img src="{{ asset('images/update_password.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top">
                                     Modifier le mot de passe
                                 </a>
                             </li>

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Contenus - Administration" ~ parent() }}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb mt-3 mb-5">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Administration</a></li>
+        <li class="breadcrumb-item active">Contenus</li>
+    </ol>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Auteur</th>
+            <th scope="col">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if subjects is not empty %}
+            {% for subject in subjects %}
+                <tr>
+                    <th scope="row">
+                        <a href="{{ path('admin_contenu_update', {'id': subject.id}) }}">{{ subject.id }}</a>
+                    </th>
+                    <td>{{ subject.title }}</td>
+                    <td>{{ subject.author }}</td>
+                    <td>{{ subject.createdAt|date }}</td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <th scope="row" colspan="4">Aucun contenu n'a été trouvé ¯\_(ツ)_/¯</th>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

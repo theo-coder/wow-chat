@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Administrateur #{admin.id} - Administration" ~ parent() }}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb mt-3 mb-5">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Administration</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Administrateurs</a></li>
+        <li class="breadcrumb-item active">{{ admin.pseudo }}</li>
+    </ol>
+{% endblock %}

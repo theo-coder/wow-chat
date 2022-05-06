@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Utilisateur #{user.id} - Administration" ~ parent() }}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb mt-3 mb-5">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Administration</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('admin_user') }}">Utilisateurs</a></li>
+        <li class="breadcrumb-item active">{{ user.pseudo }}</li>
+    </ol>
+
+    <div class="mb-5">
+        <h1>{{ user.pseudo }}</h1>
+        <h2>{{ user.email }}</h2>
+    </div>
+
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+
+        <button class="btn btn-lg btn-primary mt-3" type="submit">Mettre à jour</button>
+    {{ form_end(form) }}
+
+    <form action="{{ path('admin_user_delete', {'id': user.id }) }}" method="post">
+        <input type="hidden" name="token" value="{{ csrf_token('delete-user') }}"/>
+
+        <button class="btn btn-small btn-danger mt-2" type="submit">
+            <img src="{{ asset('images/delete.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+            Supprimer l'utilisateur
+        </button>
+    </form>
+{% endblock %}
