@@ -6,4 +6,4 @@
 .mt-n5 { margin-top: -3rem; }
 
 .navbar-dark .navbar-nav .nav-link.active,
-.navbar-dark .navbar-nav .show>.nav-link { text-decoration: underline; }
+.navbar-dark .navbar-nav .show>.nav-link { color: #00a8f3; }
