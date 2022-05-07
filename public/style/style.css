@@ -3,6 +3,10 @@
     --color-primary: #00a8f3;
 }
 
+main {
+    min-height: calc(100vh - 101px);
+}
+
 /**** NEGATIVE MARGIN ****/
 .mt-n1 { margin-top: -0.25rem; }
 .mt-n2 { margin-top: -0.5rem; }
