@@ -6,14 +6,18 @@
     <h1>Catégories</h1>
 
     {% if categories is not empty %}
-        {% for categorie in categories %}
-            <div class="card text-white bg-primary mb-3">
-                <div class="card-header">{{ categorie.name }}</div>
-                <div class="card-body">
-                    <a href="{{ path('app_index') }}" class="btn btn-small btn-info">Choisir cette catégorie</a>
+        <div class="row">
+            {% for categorie in categories %}
+                <div class="col col-lg-3">
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-header">{{ categorie.name }}</div>
+                        <div class="card-body">
+                            <a href="{{ path('app_index') }}" class="btn btn-small btn-info">Choisir cette catégorie</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% else %}
         <p>Aucune catégorie n'a été trouvée ¯\_(ツ)_/¯</p>
     {% endif %}
