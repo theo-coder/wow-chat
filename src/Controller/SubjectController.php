@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Form\SubjectType;
+use DateTimeImmutable;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,5 +35,27 @@ class SubjectController extends AbstractController
         }
 
         return $this->redirectToRoute('app_index');
+    }
+
+    #[Route('/nouveau/sujet', name: 'add')]
+    public function add(Request $request, EntityManagerInterface $em): Response
+    {
+        $subject = new Subject();
+        $subjectForm = $this->createForm(SubjectType::class, $subject);
+        $subjectForm->handleRequest($request);
+
+        if ($subjectForm->isSubmitted() && $subjectForm->isValid()) {
+            $subject->setAuthor($this->getUser());
+            $subject->setCreatedAt(new DateTimeImmutable("now", new DateTimeZone('Europe/Paris')));
+
+            $em->persist($subject);
+            $em->flush();
+
+            return $this->redirectToRoute('subject_show', ['title' => $subject->getTitle()]);
+        }
+
+        return $this->render('subject/add.html.twig', [
+            'form' => $subjectForm->createView()
+        ]);
     }
 }
