@@ -1,20 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BoardController!{% endblock %}
+{% block title %}{{ boardName ~ parent() }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <ol class="breadcrumb mt-3 mb-5">
+        <li class="breadcrumb-item"><a href="{{ path('app_index') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('category_show', {'name': categoryName}) }}">{{ categoryName }}</a></li>
+        <li class="breadcrumb-item active">{{ boardName }}</li>
+    </ol>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1 class="mb-4">Visiter les sujets WOW</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/LiveCampus/Cours/Symfony/wow-chat/src/Controller/BoardController.php'|file_link(0) }}">src/Controller/BoardController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/LiveCampus/Cours/Symfony/wow-chat/templates/board/index.html.twig'|file_link(0) }}">templates/board/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% if subjects is not empty %}
+        <div class="row">
+            {% for subject in subjects %}
+                <div class="col col-lg-3">
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-header">{{ subject.title }}</div>
+                        <div class="card-body">
+                            <a href="{{ path('subject_show', {'title': subject.title}) }}" class="btn btn-small btn-info">Choisir ce sujet</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucun sujet n'a été trouvée ¯\_(ツ)_/¯</p>
+    {% endif %}
 {% endblock %}

@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/categorie', name: 'category_')]
+#[Route('/catégorie', name: 'category_')]
 class CategoryController extends AbstractController
 {
     #[Route('/{name}', name: 'show')]
@@ -17,6 +17,7 @@ class CategoryController extends AbstractController
         $boards = $boardRepository->findBy(['category' => $category]);
 
         return $this->render('category/index.html.twig', [
+            'categoryName' => $category->getName(),
             'boards' => $boards
         ]);
     }

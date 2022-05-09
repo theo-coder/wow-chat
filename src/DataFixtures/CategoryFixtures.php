@@ -23,6 +23,7 @@ class CategoryFixtures extends Fixture
         foreach ($this->categories as $idx => $category) {
             $newCategory = new Category();
             $newCategory->setName($category);
+            $newCategory->setAuthorizedRoles(["ROLE_USER"]);
 
             $manager->persist($newCategory);
 

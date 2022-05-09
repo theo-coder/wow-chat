@@ -3,7 +3,7 @@
 {% block title %}{{ "Accueil" ~ parent() }}{% endblock %}
 
 {% block body %}
-    <h1 class="mb-3">Visiter nos catégories</h1>
+    <h1 class="mb-4">Visiter nos catégories WOW</h1>
 
     {% if categories is not empty %}
         <div class="row">
@@ -12,7 +12,7 @@
                     <div class="card text-white bg-primary mb-3">
                         <div class="card-header">{{ categorie.name }}</div>
                         <div class="card-body">
-                            <a href="{{ path('app_index') }}" class="btn btn-small btn-info">Choisir cette catégorie</a>
+                            <a href="{{ path('category_show', {'name': categorie.name}) }}" class="btn btn-small btn-info">Choisir cette catégorie</a>
                         </div>
                     </div>
                 </div>
