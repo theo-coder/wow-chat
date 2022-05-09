@@ -3,31 +3,39 @@
 namespace App\DataFixtures;
 
 use App\Entity\Category;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use BaseFixture;
 use Doctrine\Persistence\ObjectManager;
 
-class CategoryFixtures extends Fixture
-{
-    const CATEGORY_BOARD_REFERENCE = "category-board";
+use Faker;
 
-    private array $categories = [
+class CategoryFixtures extends BaseFixture
+{
+    private static $categoryTitles = [
         "High Tech",
         "Animaux",
         "Nature",
         "Musique",
-        "Histoire"
+        "Histoire",
+        "Sport",
+        "Mode",
+        "Cuisine",
+        "Bricolage",
+        "Voyage"
     ];
 
-    public function load(ObjectManager $manager): void
+    private static $categoryAuthorizedRoles = [
+        "ROLE_USER",
+        "ROLE_INSIDER",
+        "ROLE_COLLABORATOR",
+        "ROLE_EXTERNAL"
+    ];
+
+    public function loadData(ObjectManager $manager): void
     {
-        foreach ($this->categories as $idx => $category) {
-            $newCategory = new Category();
-            $newCategory->setName($category);
-
-            $manager->persist($newCategory);
-
-            $this->addReference(self::CATEGORY_BOARD_REFERENCE . "_$idx", $newCategory);
-        }
+        $this->createMany(Category::class, 10, function (Category $category, $count) {
+            $category->setName(self::$categoryTitles[$count]);
+            $category->setAuthorizedRoles($this->faker->randomElements(self::$categoryAuthorizedRoles));
+        });
 
         $manager->flush();
     }
