@@ -4,33 +4,34 @@ namespace App\DataFixtures;
 
 use App\Entity\Board;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class BoardFixtures extends Fixture
+class BoardFixtures extends Fixture implements DependentFixtureInterface
 {
     private array $boards = [
-        1 => [
+        [
             "Informatique",
             "Hardware",
             "Gadgets"
         ],
-        2 => [
+        [
             "Chien",
             "Domestique",
             "Sauvage"
         ],
-        3 => [
+        [
             "Paysage",
             "Forêt",
             "Lieu"
         ],
-        4 => [
+        [
             "Rock/Métal",
             "Pop",
             "Rap/Hip-hop",
             "Classique"
         ],
-        5 => [
+        [
             "France",
             "Europe",
             "Espace"
@@ -39,17 +40,23 @@ class BoardFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        foreach ($this->boards as $boardCategory => $boardContent) {
-            $newBoard = new Board();
-            $newBoard->setCategory($boardCategory);
-
-            foreach ($boardContent as $board) {
+        foreach ($this->boards as $categoryIdx => $boardCategory) {
+            foreach ($boardCategory as $board) {
+                $newBoard = new Board();
                 $newBoard->setName($board);
+                $newBoard->setCategory($this->getReference(CategoryFixtures::CATEGORY_BOARD_REFERENCE . "_$categoryIdx"));
 
                 $manager->persist($newBoard);
             }
         }
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            CategoryFixtures::class,
+        ];
     }
 }
