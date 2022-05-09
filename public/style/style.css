@@ -7,8 +7,13 @@ main {
     min-height: calc(100vh - 101px);
 }
 
+/**** CURSOR ****/
 * {
-    cursor: url("../images/cursor.png"), auto;
+    cursor: url("../images/cursor.png"), default;
+}
+
+a, select:hover, .btn:hover {
+    cursor: url("../images/cursor_selected.png"), pointer;
 }
 
 /**** NEGATIVE MARGIN ****/
