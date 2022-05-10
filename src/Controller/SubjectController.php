@@ -16,10 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/sujet', name: 'subject_')]
 class SubjectController extends AbstractController
 {
-    #[Route('/{title}', name: 'show')]
-    public function index(Subject $subject): Response
+    #[Route('/{categoryName}/{boardName}/{title}', name: 'show')]
+    public function index(Subject $subject, string $categoryName, string $boardName): Response
     {
         return $this->render('subject/index.html.twig', [
+            'categoryName' => $categoryName,
+            'boardName' => $boardName,
             'subject' => $subject,
         ]);
     }

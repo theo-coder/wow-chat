@@ -3,18 +3,17 @@
 {% block title %}Hello SubjectController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('app_index') }}">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('category_show', {'name': categoryName}) }}">{{ categoryName }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('board_show', {'categoryName': categoryName, 'name': boardName}) }}">{{ boardName }}</a></li>
+        <li class="breadcrumb-item active">{{ subject.title }}</li>
+    </ol>
+    
+    <h1 class="mt-5">{{ subject.title }}</h1>
+    <h2 class="h4">{{ subject.author.pseudo }} / <small class="text-muted h6">{{ subject.createdAt|date("l m F Y à H:i:s", "Europe/Paris") }}</small></h2>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <hr class="mt-2 mb-5">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/LiveCampus/Cours/Symfony/wow-chat/src/Controller/SubjectController.php'|file_link(0) }}">src/Controller/SubjectController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/LiveCampus/Cours/Symfony/wow-chat/templates/subject/index.html.twig'|file_link(0) }}">templates/subject/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <p>{{ subject.content }}</p>
 {% endblock %}

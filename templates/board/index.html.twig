@@ -18,7 +18,7 @@
                     <div class="card text-white bg-primary mb-3">
                         <div class="card-header">{{ subject.title }}</div>
                         <div class="card-body">
-                            <a href="{{ path('subject_show', {'title': subject.title}) }}" class="btn btn-small btn-info">Choisir ce sujet</a>
+                            <a href="{{ path('subject_show', {'categoryName': categoryName, 'boardName': boardName, 'title': subject.title}) }}" class="btn btn-small btn-info">Choisir ce sujet</a>
                         </div>
                     </div>
                 </div>
