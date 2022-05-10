@@ -16,6 +16,8 @@ a, select:hover, .btn:hover {
     cursor: url("../images/cursor_selected.png"), pointer;
 }
 
+.cursor-pointer { cursor: pointer; }
+
 /**** NEGATIVE MARGIN ****/
 .mt-n1 { margin-top: -0.25rem; }
 .mt-n2 { margin-top: -0.5rem; }
