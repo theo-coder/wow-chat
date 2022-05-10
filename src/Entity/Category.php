@@ -18,7 +18,7 @@ class Category
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\Column(type: 'array')]
+    #[ORM\Column(type: 'json')]
     private $authorized_roles = [];
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Board::class, orphanRemoval: true)]
@@ -46,9 +46,16 @@ class Category
         return $this;
     }
 
-    public function getAuthorizedRoles(): ?array
+    /**
+     * @see CategoryInterface
+     */
+    public function getAuthorizedRoles(): array
     {
-        return $this->authorized_roles;
+        $roles = $this->authorized_roles;
+
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
     public function setAuthorizedRoles(array $authorized_roles): self
