@@ -15,6 +15,12 @@ class IndexController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
 
+        foreach ($categories as $idx => $category) {
+            if (($this->getUser() && !in_array($this->getUser()->getRoles()[0], $category->getAuthorizedRoles())) || !in_array("ROLE_USER", $category->getAuthorizedRoles())) {
+                unset($categories[$idx]);
+            }
+        }
+
         return $this->render('index/index.html.twig', [
             'categories' => $categories
         ]);
