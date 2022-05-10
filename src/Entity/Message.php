@@ -19,12 +19,19 @@ class Message
     #[ORM\Column(type: 'text')]
     private $content;
 
-    #[ORM\Column(type: 'string', length: 255)]
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'messages')]
+    #[ORM\JoinColumn(nullable: false)]
     private $author;
 
     #[ORM\ManyToOne(targetEntity: Subject::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
     private $subject;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable('now');
+    }
 
     public function getId(): ?int
     {
@@ -55,12 +62,12 @@ class Message
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuthor(?User $author): self
     {
         $this->author = $author;
 
