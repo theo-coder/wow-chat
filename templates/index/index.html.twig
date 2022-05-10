@@ -22,7 +22,7 @@
         <p>Aucune catégorie n'a été trouvée ¯\_(ツ)_/¯</p>
     {% endif %}
 
-    <a class="position-absolute bottom-0 end-0 cursor-pointer" href="{{ path('subject_add') }}" data-bs-toggle="tooltip" data-bs-placement="left" title="Ajouter un contenu">
-        <img src="{{ asset('images/add_circle.png') }}" alt="Ajouter un contenu" width="60" height="60">
+    <a class="position-absolute bottom-0 end-0" href="{{ path('subject_add') }}" data-bs-toggle="tooltip" data-bs-placement="left" title="Ajouter un contenu">
+        <img src="{{ asset('images/add_circle.png') }}" alt="Ajouter un contenu" class="cursor-pointer" width="60" height="60">
     </a>
 {% endblock %}
