@@ -6,6 +6,8 @@ use App\Entity\Board;
 use App\Entity\Category;
 use App\Entity\Subject;
 use App\Entity\User;
+use App\Form\AdminAddBoardType;
+use App\Form\AdminAddCategoryType;
 use App\Form\AdminUpdateUserFormType;
 use App\Repository\BoardRepository;
 use App\Repository\CategoryRepository;
@@ -84,6 +86,24 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/categorie/ajouter/nouvelle', name: 'categorie_add')]
+    public function categoryAdd(Request $request, EntityManagerInterface $em): Response
+    {
+        $category = new Category();
+
+        $categoryForm = $this->createForm(AdminAddCategoryType::class, $category);
+        $categoryForm->handleRequest($request);
+
+        if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+            $em->persist($category);
+            $em->flush();
+        }
+
+        return $this->render('admin/category/add.html.twig', [
+            'form' => $categoryForm->createView()
+        ]);
+    }
+
     #[Route('/categorie/{id}/supprimer', name: 'categorie_delete')]
     public function categoryDelete(Category $category, Request $request, EntityManagerInterface $em): RedirectResponse
     {
@@ -107,6 +127,24 @@ class AdminController extends AbstractController
 
         return $this->render('admin/board/index.html.twig', [
             'boards' => $boards
+        ]);
+    }
+
+    #[Route('/board/ajouter/nouveau', name: 'board_add')]
+    public function boardAdd(Request $request, EntityManagerInterface $em): Response
+    {
+        $board = new Board();
+
+        $boardForm = $this->createForm(AdminAddBoardType::class, $board);
+        $boardForm->handleRequest($request);
+
+        if ($boardForm->isSubmitted() && $boardForm->isValid()) {
+            $em->persist($boardForm);
+            $em->flush();
+        }
+
+        return $this->render('admin/category/add.html.twig', [
+            'form' => $boardForm->createView()
         ]);
     }
 
