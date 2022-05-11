@@ -8,4 +8,20 @@
         <li class="breadcrumb-item"><a href="{{ path('admin_contenu') }}">Contenus</a></li>
         <li class="breadcrumb-item active">{{ subject.title }}</li>
     </ol>
+
+    <h1 class="mt-5">{{ subject.title }}</h1>
+    <h2 class="h4">{{ subject.author.pseudo }} / <small class="text-muted h6">{{ subject.createdAt|date("l m F Y à H:i:s", "Europe/Paris") }}</small></h2>
+
+    <hr class="mt-2 mb-5">
+
+    <p>{{ subject.content }}</p>
+
+    <form action="{{ path('admin_contenu_delete', {'id': subject.id }) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce contenu ?');">
+        <input type="hidden" name="token" value="{{ csrf_token('delete-subject') }}"/>
+
+        <button class="btn btn-small btn-danger mt-2" type="submit">
+            <img src="{{ asset('images/delete.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+            Supprimer le contenu
+        </button>
+    </form>
 {% endblock %}

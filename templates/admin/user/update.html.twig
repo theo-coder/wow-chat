@@ -20,7 +20,7 @@
         <button class="btn btn-lg btn-primary mt-3" type="submit">Mettre à jour</button>
     {{ form_end(form) }}
 
-    <form action="{{ path('admin_user_delete', {'id': user.id }) }}" method="post">
+    <form action="{{ path('admin_user_delete', {'id': user.id }) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
         <input type="hidden" name="token" value="{{ csrf_token('delete-user') }}"/>
 
         <button class="btn btn-small btn-danger mt-2" type="submit">

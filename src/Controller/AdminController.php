@@ -89,6 +89,19 @@ class AdminController extends AbstractController
         ]);
     }
 
+    #[Route('/contenu/{id}/supprimer', name: 'contenu_delete')]
+    public function contenuDelete(Subject $subject, Request $request, EntityManagerInterface $em): RedirectResponse
+    {
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('delete-subject', $submittedToken)) {
+            $em->remove($subject);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin_contenu');
+    }
+
 
     /*************** ADMINISTRATOR ***************/
 

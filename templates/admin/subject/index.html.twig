@@ -25,8 +25,8 @@
                         <a href="{{ path('admin_contenu_update', {'id': subject.id}) }}">{{ subject.id }}</a>
                     </th>
                     <td>{{ subject.title }}</td>
-                    <td>{{ subject.author }}</td>
-                    <td>{{ subject.createdAt|date }}</td>
+                    <td>{{ subject.author.pseudo }}</td>
+                    <td>{{ subject.createdAt|date("d/m/Y  H:i:s", "Europe/Paris") }}</td>
                 </tr>
             {% endfor %}
         {% else %}
