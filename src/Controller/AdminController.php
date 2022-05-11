@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Board;
+use App\Entity\Category;
 use App\Entity\Subject;
 use App\Entity\User;
 use App\Form\AdminUpdateUserFormType;
+use App\Repository\BoardRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\SubjectRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -65,6 +69,58 @@ class AdminController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_user');
+    }
+
+
+    /*************** CATEGORY ***************/
+
+    #[Route('/categorie', name: 'categorie')]
+    public function category(CategoryRepository $categoryRepository): Response
+    {
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('admin/category/index.html.twig', [
+            'categories' => $categories
+        ]);
+    }
+
+    #[Route('/categorie/{id}/supprimer', name: 'categorie_delete')]
+    public function categoryDelete(Category $category, Request $request, EntityManagerInterface $em): RedirectResponse
+    {
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('delete-category', $submittedToken)) {
+            $em->remove($category);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin_categorie');
+    }
+
+
+    /*************** BOARD ***************/
+
+    #[Route('/board', name: 'board')]
+    public function board(BoardRepository $boardRepository): Response
+    {
+        $boards = $boardRepository->findAll();
+
+        return $this->render('admin/board/index.html.twig', [
+            'boards' => $boards
+        ]);
+    }
+
+    #[Route('/board/{id}/supprimer', name: 'board_delete')]
+    public function boardDelete(Board $board, Request $request, EntityManagerInterface $em): RedirectResponse
+    {
+        $submittedToken = $request->request->get('token');
+
+        if ($this->isCsrfTokenValid('delete-board', $submittedToken)) {
+            $em->remove($board);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('admin_board');
     }
 
 

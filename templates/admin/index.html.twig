@@ -11,7 +11,7 @@
                     Utilisateurs
                 </div>
                 <div class="card-body">
-                    <p class="card-text">Modifier le rôle</p>
+                    <p class="card-text">Bloquer/Modifier le rôle</p>
                     <a href="{{ path('admin_user') }}" class="btn btn-small btn-info">Aller voir</a>
                 </div>
             </div>
@@ -39,6 +39,32 @@
                 <div class="card-body">
                     <p class="card-text">Ajouter/Supprimer un administrateur</p>
                     <a href="{{ path('admin_administrator') }}" class="btn btn-small btn-info">Aller voir</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-lg-4">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header h3">
+                    <img src="{{ asset('images/categorie.png') }}" alt="" width="30" height="28" class="d-inline-block">
+                    Catégorie
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Ajouter/Supprimer une catégorie</p>
+                    <a href="{{ path('admin_categorie') }}" class="btn btn-small btn-info">Aller voir</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col col-lg-4">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header h3">
+                    <img src="{{ asset('images/board.png') }}" alt="" width="30" height="28" class="d-inline-block">
+                    Board
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Ajouter/Supprimer un board</p>
+                    <a href="{{ path('admin_board') }}" class="btn btn-small btn-info">Aller voir</a>
                 </div>
             </div>
         </div>

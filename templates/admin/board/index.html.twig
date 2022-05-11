@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Boards - Administration" ~ parent() }}{% endblock %}
+
+{% block body %}
+    <ol class="breadcrumb mt-3 mb-5">
+        <li class="breadcrumb-item"><a href="{{ path('admin_index') }}">Administration</a></li>
+        <li class="breadcrumb-item active">Boards</li>
+    </ol>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if boards is not empty %}
+            {% for board in boards %}
+                <tr>
+                    <th scope="row">{{ board.id }}</th>
+                    <td>{{ board.name }}</td>
+                    <td>{{ board.category.name }}</td>
+                    <td>
+                        <form action="{{ path('admin_board_delete', {'id': board.id }) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce board ?');">
+                            <input type="hidden" name="token" value="{{ csrf_token('delete-board') }}"/>
+
+                            <button class="btn btn-small btn-danger rounded-circle" type="submit">
+                                <img src="{{ asset('images/delete.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <th scope="row" colspan="4">Aucun board n'a été trouvé ¯\_(ツ)_/¯</th>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
