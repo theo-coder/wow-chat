@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Nouvelle catégorie" ~ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center mt-3 mb-5">
+        <a href="{{ path('admin_categorie') }}">
+            <img src="{{ asset('images/back.png') }}" alt="Retour" class="me-3" width="60" height="48">
+        </a>
+        <h1>Ajouter une catégorie</h1>
+    </div>
+
+    {# {{ form_start(form) }}
+        {{ form_rest(form) }}
+
+        <button class="btn btn-lg btn-primary mt-3">Ajouter la catégorie</button>
+    {{ form_end(form) }} #}
+{% endblock %}
+
+
+
