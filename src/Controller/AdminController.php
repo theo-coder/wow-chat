@@ -195,26 +195,4 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('admin_contenu');
     }
-
-
-    /*************** ADMINISTRATOR ***************/
-
-    #[Route('/administrateur', name: 'administrator')]
-    public function admin(UserRepository $userRepository): Response
-    {
-        $admins = $userRepository->findAdmin();
-
-        return $this->render('admin/administrator/index.html.twig', [
-            'admins' => $admins
-        ]);
-    }
-
-
-    #[Route('/administrateur/{id}', name: 'administrator_update')]
-    public function adminUpdate(User $admin): Response
-    {
-        return $this->render('admin/administrator/update.html.twig', [
-            'admin' => $admin
-        ]);
-    }
 }

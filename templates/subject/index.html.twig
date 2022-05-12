@@ -9,7 +9,7 @@
         <li class="breadcrumb-item"><a href="{{ path('board_show', {'categoryName': categoryName, 'name': boardName}) }}">{{ boardName }}</a></li>
         <li class="breadcrumb-item active">{{ subject.title }}</li>
     </ol>
-    
+
     <h1 class="mt-5">{{ subject.title }}</h1>
     <h2 class="h4">{{ subject.author.pseudo }} / <small class="text-muted h6">{{ subject.createdAt|date("l m F Y à H:i:s", "Europe/Paris") }}</small></h2>
 
