@@ -117,6 +117,12 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_categorie');
     }
 
+    #[Route('/categorie/{id}/modifier', name: 'categorie_update')]
+    public function categorieUpdate(Category $category, Request $request, EntityManagerInterface $em): Response
+    {
+        return $this->render('admin/category/update.html.twig', []);
+    }
+
 
     /*************** BOARD ***************/
 
