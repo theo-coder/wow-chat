@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Message;
 use App\Entity\Subject;
+use App\Form\MessageType;
 use App\Form\SubjectType;
 use App\Repository\MessageRepository;
 use DateTimeImmutable;
@@ -18,11 +20,27 @@ use Symfony\Component\Routing\Annotation\Route;
 class SubjectController extends AbstractController
 {
     #[Route('/{categoryName}/{boardName}/{title}', name: 'show')]
-    public function index(Subject $subject, string $categoryName, string $boardName, MessageRepository $messageRepository): Response
+    public function index(Subject $subject, string $categoryName, string $boardName, MessageRepository $messageRepository, Request $request, EntityManagerInterface $em): Response
     {
+        $message = new Message();
+        $messageForm = $this->createForm(MessageType::class, $message);
+        $messageForm->handleRequest($request);
+
+        if ($messageForm->isSubmitted() && $messageForm->isValid()) {
+            $message->setSubject($subject);
+            $message->setAuthor($this->getUser());
+            $message->setCreatedAt(new DateTimeImmutable("now", new DateTimeZone("Europe/Paris")));
+
+            $em->persist($message);
+            $em->flush();
+
+            return $this->redirectToRoute('subject_show', ['categoryName' => $categoryName, 'boardName' => $boardName, 'title' => $subject->getTitle()]);
+        }
+
         $messages = $messageRepository->findBy(['subject' => $subject]);
 
         return $this->render('subject/index.html.twig', [
+            'form' => $messageForm->createView(),
             'messages' => $messages,
             'categoryName' => $categoryName,
             'boardName' => $boardName,

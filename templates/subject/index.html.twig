@@ -19,12 +19,31 @@
 
     <h2 class="mt-5 mb-4">Messages</h2>
 
-    {% for mesage in messages %}
+    {% for message in messages %}
         <div class="card border-light my-3">
-            <div class="card-header">{{ mesage.author.pseudo }} / <small class="text-muted">{{ mesage.createdAt|date("l m F Y à H:i:s", "Europe/Paris") }}</small></div>
+            <div class="card-header d-flex justify-content-between">
+                <div>
+                    {{ message.author.pseudo }} / <small class="text-muted">{{ message.createdAt|date("l m F Y à H:i:s", "Europe/Paris") }}</small>
+                </div>
+                {% if message.author == app.user %}
+                    <form action="{{ path('message_delete', {'id': message.id }) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce message ?');">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-message') }}"/>
+
+                        <button class="btn btn-small btn-danger rounded-circle" type="submit">
+                            <img src="{{ asset('images/delete.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
             <div class="card-body">
-                <p class="card-text">{{ mesage.content }}</p>
+                <p class="card-text">{{ message.content }}</p>
             </div>
         </div>
     {% endfor %}
+
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+
+        <button class="btn btn-lg btn-primary my-3">Envoyer</button>
+    {{ form_end(form) }}
 {% endblock %}
