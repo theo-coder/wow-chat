@@ -16,7 +16,11 @@ class IndexController extends AbstractController
         $categories = $categoryRepository->findAll();
 
         foreach ($categories as $idx => $category) {
-            if (($this->getUser() && !in_array($this->getUser()->getRoles()[0], $category->getAuthorizedRoles())) || !in_array("ROLE_USER", $category->getAuthorizedRoles())) {
+            if ($this->getUser()) {
+                if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles()) && !in_array($this->getUser()->getRoles()[0], $category->getAuthorizedRoles())) {
+                    unset($categories[$idx]);
+                }
+            } elseif (!in_array("ROLE_USER", $category->getAuthorizedRoles())) {
                 unset($categories[$idx]);
             }
         }
