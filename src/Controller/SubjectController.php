@@ -11,6 +11,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,19 @@ class SubjectController extends AbstractController
             $message->setSubject($subject);
             $message->setAuthor($this->getUser());
             $message->setCreatedAt(new DateTimeImmutable("now", new DateTimeZone("Europe/Paris")));
+
+            /** @var UploadedFile $files */
+            $files = $messageForm->get('files')->getData();
+            $files_url = [];
+
+            foreach ($files as $file) {
+                $filename = bin2hex(random_bytes(10));
+                $extension = $file->guessExtension() ?? 'bin';
+                $file->move('files', $filename . '.' . $extension);
+                $files_url[] = "https://127.0.0.1:8000/files/" . $filename . '.' . $extension;
+            }
+
+            $message->setFiles($files_url);
 
             $em->persist($message);
             $em->flush();

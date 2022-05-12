@@ -37,6 +37,14 @@
             </div>
             <div class="card-body">
                 <p class="card-text">{{ message.content }}</p>
+
+                {% for file in message.files %}
+                    {% if file|split('.')|last == "jpg" %}
+                        <img src="{{ file }}" alt="Fichier image" width="150">
+                    {% else %}
+                        <a href="{{ file }}">{{ file|split('/')|last }}</a>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     {% endfor %}
