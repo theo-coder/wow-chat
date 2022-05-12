@@ -28,6 +28,9 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private $subject;
 
+    #[ORM\Column(type: 'json', nullable: true)]
+    private $files = [];
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable('now');
@@ -82,6 +85,18 @@ class Message
     public function setSubject(?Subject $subject): self
     {
         $this->subject = $subject;
+
+        return $this;
+    }
+
+    public function getFiles(): ?array
+    {
+        return $this->files;
+    }
+
+    public function setFiles(?array $files): self
+    {
+        $this->files = $files;
 
         return $this;
     }
