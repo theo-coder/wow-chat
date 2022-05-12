@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Subject;
 use App\Form\SubjectType;
+use App\Repository\MessageRepository;
 use DateTimeImmutable;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,9 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SubjectController extends AbstractController
 {
     #[Route('/{categoryName}/{boardName}/{title}', name: 'show')]
-    public function index(Subject $subject, string $categoryName, string $boardName): Response
+    public function index(Subject $subject, string $categoryName, string $boardName, MessageRepository $messageRepository): Response
     {
+        $messages = $messageRepository->findBy(['subject' => $subject]);
+
         return $this->render('subject/index.html.twig', [
+            'messages' => $messages,
             'categoryName' => $categoryName,
             'boardName' => $boardName,
             'subject' => $subject,
