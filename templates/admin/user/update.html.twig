@@ -14,10 +14,8 @@
         <h2>{{ user.email }}</h2>
     </div>
 
-    {{ form_start(form) }}
-        {{ form_rest(form) }}
-
-        <button class="btn btn-lg btn-primary mt-3" type="submit">Mettre à jour</button>
+    {{ form_start(form, { 'attr': {'onsubmit': 'return confirm(\'Voulez-vous vraiment modifier cet utilisateur ?roles|join(' / ')\')'} }) }}
+        {{ form(form) }}
     {{ form_end(form) }}
 
     <form action="{{ path('admin_user_delete', {'id': user.id }) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">

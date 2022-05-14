@@ -24,14 +24,13 @@ class AdminAddCategoryType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
                 'choices' => [
-                    'ROLE_USER' => 'Utilisateur',
-                    'ROLE_INSIDER' => 'Insider',
-                    'ROLE_EXTERNAL' => 'Externe',
-                    'ROLE_COLLABORATOR' => 'Collaborateur',
-                    'ROLE_ADMIN' => 'Administrateur'
+                    'Utilisateur' => 'ROLE_USER',
+                    'Insider' => 'ROLE_INSIDER',
+                    'Externe' => 'ROLE_EXTERNAL',
+                    'Collaborateur' => 'ROLE_COLLABORATOR',
+                    'Administrateur' => 'ROLE_ADMIN'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

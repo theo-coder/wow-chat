@@ -13,6 +13,7 @@
     {{ form_start(form) }}
         {{ form_rest(form) }}
 
+        <input type="hidden" name="referer" value="{{ app.request.headers.get('referer') }}" />
         <button class="btn btn-lg btn-primary mt-3">Ajouter la catégorie</button>
     {{ form_end(form) }}
 {% endblock %}

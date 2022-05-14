@@ -14,7 +14,7 @@
             <th scope="col">#</th>
             <th scope="col">Nom</th>
             <th scope="col">Email</th>
-            <th scope="col">Rôle</th>
+            {# <th scope="col">Rôles</th> #}
         </tr>
     </thead>
     <tbody>
@@ -26,7 +26,7 @@
                 </th>
                 <td>{{ user.pseudo }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.dbRole }}</td>
+                {# <td>{{ user.roles|join(' / ') }}</td> #}
             </tr>
         {% endfor %}
     {% else %}
