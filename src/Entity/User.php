@@ -79,9 +79,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function getDbRole(): array
+    public function getRolesWithoutUser(): array
     {
-        return $this->roles ?? "Aucun rôle";
+        return count($this->roles) ? $this->roles : ["Aucun rôle"];
     }
 
     public function setRoles(array $roles): self

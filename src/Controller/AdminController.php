@@ -67,7 +67,7 @@ class AdminController extends AbstractController
     {
         $submittedToken = $request->request->get('token');
 
-        if ($this->isCsrfTokenValid('delete-user', $submittedToken)) {
+        if ($this->isCsrfTokenValid('delete-user', $submittedToken) && $this->getUser()->getUserIdentifier() !== $user->getUserIdentifier()) {
             $em->remove($user);
             $em->flush();
         }

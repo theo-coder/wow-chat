@@ -14,7 +14,8 @@
             <th scope="col">#</th>
             <th scope="col">Nom</th>
             <th scope="col">Email</th>
-            {# <th scope="col">Rôles</th> #}
+            <th scope="col">Rôles</th>
+            <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -26,7 +27,19 @@
                 </th>
                 <td>{{ user.pseudo }}</td>
                 <td>{{ user.email }}</td>
-                {# <td>{{ user.roles|join(' / ') }}</td> #}
+                <td>{{ user.getRolesWithoutUser()|join(' / ') }}</td>
+                <td class="d-flex">
+                    <a href="{{ path('admin_user_update', {'id': user.id}) }}" class="btn btn-warning">
+                        <img src="{{ asset('images/edit.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+                    </a>
+                    <form action="{{ path('admin_user_delete', {'id': user.id }) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer cet utilisateur ?');">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-user') }}"/>
+
+                        <button class="btn btn-small btn-danger rounded-circle" type="submit">
+                            <img src="{{ asset('images/delete.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+                        </button>
+                    </form>
+                </td>
             </tr>
         {% endfor %}
     {% else %}
