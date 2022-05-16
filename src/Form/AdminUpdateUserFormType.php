@@ -23,6 +23,7 @@ class AdminUpdateUserFormType extends AbstractType
                     'Insider' => 'ROLE_INSIDER',
                     'Collaborateur' => 'ROLE_COLLABORATOR',
                     'Externe' => 'ROLE_EXTERNAL',
+                    'Editeur' => 'ROLE_EDITOR',
                     'Administrateur' => 'ROLE_ADMIN'
                 ],
                 'multiple' => true,

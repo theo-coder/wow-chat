@@ -88,26 +88,6 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/categorie/ajouter/nouvelle', name: 'categorie_add')]
-    public function categoryAdd(Request $request, EntityManagerInterface $em): Response
-    {
-        $category = new Category();
-
-        $categoryForm = $this->createForm(AdminAddCategoryType::class, $category);
-        $categoryForm->handleRequest($request);
-
-        if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
-            $em->persist($category);
-            $em->flush();
-
-            return $this->redirect($request->request->get('referer'));
-        }
-
-        return $this->render('admin/category/add.html.twig', [
-            'form' => $categoryForm->createView()
-        ]);
-    }
-
     #[Route('/categorie/{id}/supprimer', name: 'categorie_delete')]
     public function categoryDelete(Category $category, Request $request, EntityManagerInterface $em): RedirectResponse
     {
