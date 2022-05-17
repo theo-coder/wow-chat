@@ -24,4 +24,9 @@
             Supprimer le contenu
         </button>
     </form>
+
+    <a href="{{ path('editor_subject_edit', {'id': subject.id}) }}" class="btn btn-warning mt-3">
+        <img src="{{ asset('images/edit.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+        Modifier le contenu
+    </a>
 {% endblock %}

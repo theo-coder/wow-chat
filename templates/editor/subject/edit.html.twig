@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ "Modifier" ~ title ~ parent() }}{% endblock %}
+
+{% block body %}
+    <h1 class="mb-4">Modifier "{{ title }}"</h1>
+
+    {{ form_start(form) }}
+        {{ form_rest(form) }}
+
+        <button class="btn btn-lg btn-success">Modifier</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+
+

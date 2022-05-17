@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Board;
 use App\Entity\Category;
+use App\Entity\Subject;
 use App\Form\AdminAddBoardType;
 use App\Form\AdminAddCategoryType;
+use App\Form\SubjectType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,6 +57,25 @@ class EditorController extends AbstractController
 
         return $this->render('editor/board/add.html.twig', [
             'form' => $boardForm->createView()
+        ]);
+    }
+
+    #[Route('/category/{id}/subject/edit', name: 'subject_edit')]
+    public function editSubject(Subject $subject, Request $request, EntityManagerInterface $em): Response
+    {
+        $subjectForm = $this->createForm(SubjectType::class, $subject);
+        $subjectForm->handleRequest($request);
+
+        if ($subjectForm->isSubmitted() && $subjectForm->isValid()) {
+            $em->persist($subject);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_contenu_update', ['id' => $subject->getId()]);
+        }
+
+        return $this->render('editor/subject/edit.html.twig', [
+            'title' => $subject->getTitle(),
+            'form' => $subjectForm->createView()
         ]);
     }
 }
