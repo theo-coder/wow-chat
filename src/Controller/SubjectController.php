@@ -73,7 +73,7 @@ class SubjectController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('subject_show', ['categoryName' => $subject->getBoard()->getCategory()->getName(), 'boardName' => $subject->getBoard()->getName(), 'title' => $subject->getTitle()]);
+        return $this->redirectToRoute('board_show', ['categoryName' => $subject->getBoard()->getCategory()->getName(), 'name' => $subject->getBoard()->getName()]);
     }
 
     #[Route('/nouveau/sujet', name: 'add')]
