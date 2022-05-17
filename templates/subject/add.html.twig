@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex align-items-center mt-3 mb-5">
-        <a href="{{ path('app_index') }}">
+        <a href="{{ app.request.headers.get('referer') }}">
             <img src="{{ asset('images/back.png') }}" alt="Retour" class="me-3" width="60" height="48">
         </a>
         <h1>Ajouter un sujet</h1>

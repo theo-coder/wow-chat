@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ categoryName ~ parent() }}{% endblock %}
+{% block title %}{{ category.getName() ~ parent() }}{% endblock %}
 
 {% block body %}
     <ol class="breadcrumb mt-3 mb-5">
         <li class="breadcrumb-item"><a href="{{ path('app_index') }}">Accueil</a></li>
-        <li class="breadcrumb-item active">{{ categoryName }}</li>
+        <li class="breadcrumb-item active">{{ category.getName() }}</li>
     </ol>
 
     <h1 class="mb-4">Visiter nos boards WOW</h1>
@@ -17,7 +17,7 @@
                     <div class="card text-white bg-primary mb-3">
                         <div class="card-header">{{ board.name }}</div>
                         <div class="card-body">
-                            <a href="{{ path('board_show', {'name': board.name, 'categoryName': categoryName}) }}" class="btn btn-small btn-info">Choisir ce board</a>
+                            <a href="{{ path('board_show', {'name': board.name, 'categoryName': category.getName()}) }}" class="btn btn-small btn-info">Choisir ce board</a>
                         </div>
                     </div>
                 </div>
@@ -25,5 +25,12 @@
         </div>
     {% else %}
         <p>Aucun board n'a été trouvée ¯\_(ツ)_/¯</p>
+    {% endif %}
+    
+
+    {% if is_granted('ROLE_EDITOR') or is_granted('ROLE_ADMIN') %}
+        <a class="position-absolute bottom-0 end-0" href="{{ path('editor_board_add', { id: category.getId() }) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="Ajouter un contenu">
+            <img src="{{ asset('images/add_circle.png') }}" alt="Ajouter un contenu" class="cursor-pointer" width="60" height="60">
+        </a>
     {% endif %}
 {% endblock %}

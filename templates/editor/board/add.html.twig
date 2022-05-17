@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="d-flex align-items-center mt-3 mb-5">
-        <a href="{{ path('admin_board') }}">
+        <a href="{{ app.request.headers.get('referer') }}">
             <img src="{{ asset('images/back.png') }}" alt="Retour" class="me-3" width="60" height="48">
         </a>
         <h1>Ajouter un board</h1>
@@ -13,6 +13,7 @@
     {{ form_start(form) }}
         {{ form_rest(form) }}
 
+        <input type="hidden" name="referer" value="{{ app.request.headers.get('referer') }}"/>
         <button class="btn btn-lg btn-primary mt-3">Ajouter le board</button>
     {{ form_end(form) }}
 {% endblock %}

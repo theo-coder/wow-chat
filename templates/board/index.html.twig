@@ -27,4 +27,10 @@
     {% else %}
         <p>Aucun sujet n'a été trouvée ¯\_(ツ)_/¯</p>
     {% endif %}
+    
+    {% if is_granted('ROLE_USER') %}
+        <a class="position-absolute bottom-0 end-0" href="{{ path('subject_add', { 'boardName': boardName }) }}" data-bs-toggle="tooltip" data-bs-placement="left" title="Ajouter un contenu">
+            <img src="{{ asset('images/add_circle.png') }}" alt="Ajouter un contenu" class="cursor-pointer" width="60" height="60">
+        </a>
+    {% endif %}
 {% endblock %}

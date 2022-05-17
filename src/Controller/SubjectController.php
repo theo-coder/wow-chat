@@ -6,6 +6,7 @@ use App\Entity\Message;
 use App\Entity\Subject;
 use App\Form\MessageType;
 use App\Form\SubjectType;
+use App\Repository\BoardRepository;
 use App\Repository\MessageRepository;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -40,7 +41,7 @@ class SubjectController extends AbstractController
                 $filename = bin2hex(random_bytes(10));
                 $extension = $file->guessExtension() ?? 'bin';
                 $file->move('files', $filename . '.' . $extension);
-                $files_url[] = "https://127.0.0.1:8000/files/" . $filename . '.' . $extension;
+                $files_url[] = $request->server->get('HTTP_ORIGIN') . "/files/" . $filename . '.' . $extension;
             }
 
             $message->setFiles($files_url);
@@ -76,9 +77,14 @@ class SubjectController extends AbstractController
     }
 
     #[Route('/nouveau/sujet', name: 'add')]
-    public function add(Request $request, EntityManagerInterface $em): Response
+    public function add(BoardRepository $boardRepository, Request $request, EntityManagerInterface $em): Response
     {
+        $boardName = isset($_GET['boardName']) ? $_GET['boardName'] : "";
+
         $subject = new Subject();
+
+        $subject->setBoard($boardRepository->findBy(['name' => $boardName])[0]);
+
         $subjectForm = $this->createForm(SubjectType::class, $subject);
         $subjectForm->handleRequest($request);
 
@@ -89,7 +95,7 @@ class SubjectController extends AbstractController
             $em->persist($subject);
             $em->flush();
 
-            return $this->redirectToRoute('subject_show', ['title' => $subject->getTitle()]);
+            return $this->redirectToRoute('subject_show', ['title' => $subject->getTitle(), 'categoryName' => $subject->getBoard()->getCategory()->getName(), 'boardName' => $subject->getBoard()->getName()]);
         }
 
         return $this->render('subject/add.html.twig', [

@@ -17,7 +17,7 @@ class CategoryController extends AbstractController
         $boards = $boardRepository->findBy(['category' => $category]);
 
         return $this->render('category/index.html.twig', [
-            'categoryName' => $category->getName(),
+            'category' => $category,
             'boards' => $boards
         ]);
     }

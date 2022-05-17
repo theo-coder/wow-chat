@@ -24,8 +24,7 @@ class AdminAddBoardType extends AbstractType
                 'required' => true,
                 'choice_label' => 'name',
                 'label' => 'Catégorie'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

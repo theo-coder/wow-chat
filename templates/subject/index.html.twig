@@ -48,10 +48,13 @@
             </div>
         </div>
     {% endfor %}
+    {% if is_granted('ROLE_USER') %}
 
-    {{ form_start(form) }}
-        {{ form_rest(form) }}
+        {{ form_start(form) }}
+            {{ form_rest(form) }}
 
-        <button class="btn btn-lg btn-primary my-3">Envoyer</button>
-    {{ form_end(form) }}
+            <button class="btn btn-lg btn-primary my-3">Envoyer</button>
+        {{ form_end(form) }}
+
+    {% endif %}
 {% endblock %}
