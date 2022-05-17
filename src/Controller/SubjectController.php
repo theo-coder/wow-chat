@@ -63,7 +63,7 @@ class SubjectController extends AbstractController
         ]);
     }
 
-    #[Route('/{title}/supprimer', name: 'delete')]
+    #[Route('/{id}/supprimer', name: 'delete')]
     public function delete(Subject $subject, Request $request, EntityManagerInterface $em): RedirectResponse
     {
         $submittedToken = $request->request->get('token');
@@ -73,13 +73,13 @@ class SubjectController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('app_index');
+        return $this->redirectToRoute('subject_show', ['categoryName' => $subject->getBoard()->getCategory()->getName(), 'boardName' => $subject->getBoard()->getName(), 'title' => $subject->getTitle()]);
     }
 
     #[Route('/nouveau/sujet', name: 'add')]
     public function add(BoardRepository $boardRepository, Request $request, EntityManagerInterface $em): Response
     {
-        $boardName = isset($_GET['boardName']) ? $_GET['boardName'] : "";
+        $boardName = $_GET['boardName'] ?? "";
 
         $subject = new Subject();
 
@@ -99,6 +99,25 @@ class SubjectController extends AbstractController
         }
 
         return $this->render('subject/add.html.twig', [
+            'form' => $subjectForm->createView()
+        ]);
+    }
+
+    #[Route('/{id}/update', name: 'update')]
+    public function update(Subject $subject, Request $request, EntityManagerInterface $em): Response
+    {
+        $subjectForm = $this->createForm(SubjectType::class, $subject)->remove('board');
+        $subjectForm->handleRequest($request);
+
+        if ($subjectForm->isSubmitted() && $subjectForm->isValid()) {
+            $em->persist($subject);
+            $em->flush();
+
+            return $this->redirectToRoute('subject_show', ['categoryName' => $subject->getBoard()->getCategory()->getName(), 'boardName' => $subject->getBoard()->getName(), 'title' => $subject->getTitle()]);
+        }
+
+        return $this->render('subject/edit.html.twig', [
+            'title' => $subject->getTitle(),
             'form' => $subjectForm->createView()
         ]);
     }

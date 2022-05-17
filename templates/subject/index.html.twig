@@ -10,7 +10,24 @@
         <li class="breadcrumb-item active">{{ subject.title }}</li>
     </ol>
 
-    <h1 class="mt-5">{{ subject.title }}</h1>
+    <div class="d-flex align-items-center justify-content-between mt-5">
+        <h1>{{ subject.title }}</h1>
+        {% if subject.author == app.user %}
+            <div class="d-flex align-items-center">
+                <a href="{{ path('subject_update', {'id': subject.id}) }}" class="btn btn-warning me-3">
+                    <img src="{{ asset('images/edit.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+                </a>
+
+                <form action="{{ path('subject_delete', {'id': subject.id }) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce contenu ?');">
+                    <input type="hidden" name="token" value="{{ csrf_token('delete-subject') }}"/>
+
+                    <button class="btn btn-small btn-danger rounded-circle" type="submit">
+                        <img src="{{ asset('images/delete.png') }}" alt="" width="23" height="21" class="d-inline-block align-text-top img-white">
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
     <h2 class="h4">{{ subject.author.pseudo }} / <small class="text-muted h6">{{ subject.createdAt|date("l m F Y à H:i:s", "Europe/Paris") }}</small></h2>
 
     <hr class="mt-2 mb-5">
