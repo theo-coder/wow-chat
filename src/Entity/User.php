@@ -86,6 +86,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setRoles(array $roles): self
     {
+        if (in_array("ROLE_EDITOR", $roles)) {
+            $k = array_search("ROLE_EDITOR", $roles);
+            unset($roles[$k]);
+            array_unshift($roles, "ROLE_EDITOR");
+        }
         if (in_array("ROLE_ADMIN", $roles)) {
             $k = array_search("ROLE_ADMIN", $roles);
             unset($roles[$k]);
