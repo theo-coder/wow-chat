@@ -17,7 +17,7 @@ class SubjectFixtures extends BaseFixture implements DependentFixtureInterface
             $subject->setTitle($this->faker->catchPhrase);
             $subject->setContent($this->faker->realText);
             $subject->setBoard($this->getReference(BoardFixtures::BOARD_SUBJECT_REFERENCE . "_" . $this->faker->numberBetween(0, 49)));
-            $subject->setAuthor($this->getReference(UserFixtures::USER_SUBJECT_REFERENCE . "_" . $this->faker->numberBetween(0, 14)));
+            $subject->setAuthor($this->getReference(UserFixtures::USER_SUBJECT_REFERENCE . "_" . $this->faker->numberBetween(0, 5)));
 
             $this->addReference(self::SUBJECT_MESSAGE_REFERENCE . '_' . $count, $subject);
         });

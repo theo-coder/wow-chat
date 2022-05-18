@@ -24,16 +24,7 @@ class UserFixtures extends BaseFixture
         "theo@insider.fr",
         "theo@collaborator.fr",
         "theo@external.fr",
-        "hugo@gmail.fr",
-        "hugo@admin.fr",
-        "hugo@insider.fr",
-        "hugo@collaborator.fr",
-        "hugo@external.fr",
-        "yannis@gmail.fr",
-        "yannis@admin.fr",
-        "yannis@insider.fr",
-        "yannis@collaborator.fr",
-        "yannis@external.fr"
+        "theo@editor.fr"
     ];
 
     public function loadData(ObjectManager $manager): void
@@ -42,7 +33,7 @@ class UserFixtures extends BaseFixture
             $user = new User();
             $user->setEmail($email);
 
-            $role = \str_ends_with($email, "@admin.fr") ? ["ROLE_ADMIN"] : (\str_ends_with($user->getEmail(), "@insider.fr") ? ["ROLE_INSIDER"] : (\str_ends_with($user->getEmail(), "@collaborator.fr") ? ["ROLE_COLLABORATOR"] : (\str_ends_with($user->getEmail(), "@external.fr") ? ["ROLE_EXTERNAL"] : [])));
+            $role = \str_ends_with($email, "@editor.fr") ? ["ROLE_EDITOR"] : (\str_ends_with($email, "@admin.fr") ? ["ROLE_ADMIN"] : (\str_ends_with($user->getEmail(), "@insider.fr") ? ["ROLE_INSIDER"] : (\str_ends_with($user->getEmail(), "@collaborator.fr") ? ["ROLE_COLLABORATOR"] : (\str_ends_with($user->getEmail(), "@external.fr") ? ["ROLE_EXTERNAL"] : []))));
 
             $user->setRoles($role);
 
