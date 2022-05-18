@@ -22,7 +22,10 @@ class SecurityController extends AbstractController
     #[Route('/inscription', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        /*Créé un utilisateur vierge*/
         $user = new User();
+
+        /*Créé un formulaire d'utilisateur en passant l'utilisateur vierge en paramètre */
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
@@ -32,7 +35,7 @@ class SecurityController extends AbstractController
 
             $user->setRoles($role);
 
-            // encode the plain password
+            /* encode le mot de passe en clair */
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -42,7 +45,6 @@ class SecurityController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $userAuthenticator->authenticateUser(
                 $user,
@@ -63,9 +65,9 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('app_index');
         }
 
-        // get the login error if there is one
+        /* obtenir l'erreur de connexion s'il y en a une */
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        /* dernier nom d'utilisateur entré par l'utilisateur */
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
@@ -88,7 +90,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid() && $user) {
 
-            // encode the plain password
+            /* encode le mot de passe en clair */
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -98,7 +100,6 @@ class SecurityController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
 
             return $this->redirectToRoute('app_logout');
         }

@@ -13,8 +13,10 @@ class IndexController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(CategoryRepository $categoryRepository): Response
     {
+        /*Recupere toutes les catégories de la BDD */
         $categories = $categoryRepository->findAll();
 
+        /*Supprime les catégories que l'utilisateur n'est pas censé voir avec son role*/
         foreach ($categories as $idx => $category) {
             if ($this->getUser()) {
                 if (!in_array("ROLE_ADMIN", $this->getUser()->getRoles()) && !in_array("ROLE_EDITOR", $this->getUser()->getRoles()) && !in_array($this->getUser()->getRoles()[0], $category->getAuthorizedRoles())) {

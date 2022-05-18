@@ -14,6 +14,7 @@ class CategoryController extends AbstractController
     #[Route('/{name}', name: 'show')]
     public function index(Category $category, BoardRepository $boardRepository): Response
     {
+        /*Recupere tous les board qui sont avec la categorie recupéré dans la BDD */
         $boards = $boardRepository->findBy(['category' => $category]);
 
         return $this->render('category/index.html.twig', [

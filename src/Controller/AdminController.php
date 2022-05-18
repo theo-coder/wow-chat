@@ -32,10 +32,11 @@ class AdminController extends AbstractController
     }
 
     /*************** USER ***************/
-
+    
     #[Route('/utilisateur', name: 'user')]
     public function user(UserRepository $userRepository): Response
-    {
+    {   
+        /*Récupère tous les utilisateurs enregistré dans la bdd*/ 
         $users = $userRepository->findAll();
 
         return $this->render('admin/user/index.html.twig', [
@@ -46,13 +47,16 @@ class AdminController extends AbstractController
     #[Route('/utilisateur/{id}', name: 'user_update')]
     public function userUpdate(User $user, Request $request, EntityManagerInterface $em): Response
     {
+        /*Créer un formulaire en passant les données de l'utilisateur récupéré*/
         $userForm = $this->createForm(AdminUpdateUserFormType::class, $user);
         $userForm->handleRequest($request);
 
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+            /*Enregistre les modifications de la BDD */
             $em->persist($user);
             $em->flush();
 
+            /*Redirige vers la page de l'utilisateur modifié*/
             return $this->redirectToRoute('admin_user_update', ['id' => $user->getId()]);
         }
 
@@ -65,9 +69,12 @@ class AdminController extends AbstractController
     #[Route('/utilisateur/{id}/supprimer', name: 'user_delete')]
     public function userDelete(User $user, Request $request, EntityManagerInterface $em): RedirectResponse
     {
+        /*Récupere le token CSRF*/
         $submittedToken = $request->request->get('token');
 
+        /*Si le token est valide*/
         if ($this->isCsrfTokenValid('delete-user', $submittedToken) && $this->getUser()->getUserIdentifier() !== $user->getUserIdentifier()) {
+            /*Supprime l'utilisateur récupéré dans la BDD*/
             $em->remove($user);
             $em->flush();
         }
@@ -81,6 +88,7 @@ class AdminController extends AbstractController
     #[Route('/categorie', name: 'categorie')]
     public function category(CategoryRepository $categoryRepository): Response
     {
+        /*Recupere les catégories presentes dans la BDD */
         $categories = $categoryRepository->findAll();
 
         return $this->render('admin/category/index.html.twig', [
@@ -91,9 +99,12 @@ class AdminController extends AbstractController
     #[Route('/categorie/{id}/supprimer', name: 'categorie_delete')]
     public function categoryDelete(Category $category, Request $request, EntityManagerInterface $em): RedirectResponse
     {
+         /*Récupere le token CSRF*/
         $submittedToken = $request->request->get('token');
 
+        /*Si le token est valide*/
         if ($this->isCsrfTokenValid('delete-category', $submittedToken)) {
+            /*Supprime la catégorie récupéré dans la BDD*/
             $em->remove($category);
             $em->flush();
         }
@@ -113,6 +124,7 @@ class AdminController extends AbstractController
     #[Route('/board', name: 'board')]
     public function board(BoardRepository $boardRepository): Response
     {
+        /*Recupere les boards dans la BDD */
         $boards = $boardRepository->findAll();
 
         return $this->render('admin/board/index.html.twig', [
@@ -123,13 +135,16 @@ class AdminController extends AbstractController
     #[Route('/board/ajouter/nouveau', name: 'board_add')]
     public function boardAdd(Request $request, EntityManagerInterface $em): Response
     {
+        /*Créé un board vierge*/
         $board = new Board();
 
+        /*Créé un formulaire de board en passant le board vierge en paramètre */
         $boardForm = $this->createForm(AdminAddBoardType::class, $board);
         $boardForm->handleRequest($request);
 
         if ($boardForm->isSubmitted() && $boardForm->isValid()) {
-            $em->persist($boardForm);
+            /*Enregistre le nouveau board dans la BDD */
+            $em->persist($boardForm); 
             $em->flush();
         }
 
@@ -141,9 +156,12 @@ class AdminController extends AbstractController
     #[Route('/board/{id}/supprimer', name: 'board_delete')]
     public function boardDelete(Board $board, Request $request, EntityManagerInterface $em): RedirectResponse
     {
+        /*Récupere le token CSRF*/
         $submittedToken = $request->request->get('token');
 
+        /*Si le token est valide*/
         if ($this->isCsrfTokenValid('delete-board', $submittedToken)) {
+            /*Supprime la catégorie récupéré dans la BDD*/
             $em->remove($board);
             $em->flush();
         }
@@ -157,6 +175,7 @@ class AdminController extends AbstractController
     #[Route('/contenu', name: 'contenu')]
     public function contenu(SubjectRepository $subjectRepository): Response
     {
+        /*Recupere les sujets de la BDD */
         $subjects = $subjectRepository->findAll();
 
         return $this->render('admin/subject/index.html.twig', [
@@ -176,9 +195,11 @@ class AdminController extends AbstractController
     #[Route('/contenu/{id}/supprimer', name: 'contenu_delete')]
     public function contenuDelete(Subject $subject, Request $request, EntityManagerInterface $em): RedirectResponse
     {
+        /*Récupere le token CSRF*/
         $submittedToken = $request->request->get('token');
-
+        /*Si le token est valide*/
         if ($this->isCsrfTokenValid('delete-subject', $submittedToken)) {
+            /*Supprime lesujet récupéré dans la BDD*/
             $em->remove($subject);
             $em->flush();
         }

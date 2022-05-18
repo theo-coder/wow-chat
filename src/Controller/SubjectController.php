@@ -24,7 +24,10 @@ class SubjectController extends AbstractController
     #[Route('/{categoryName}/{boardName}/{title}', name: 'show')]
     public function index(Subject $subject, string $categoryName, string $boardName, MessageRepository $messageRepository, Request $request, EntityManagerInterface $em): Response
     {
+        /*Créé un message vierge*/
         $message = new Message();
+
+        /*Créé un formulaire de message en passant le message vierge en paramètre */
         $messageForm = $this->createForm(MessageType::class, $message);
         $messageForm->handleRequest($request);
 
@@ -33,6 +36,7 @@ class SubjectController extends AbstractController
             $message->setAuthor($this->getUser());
             $message->setCreatedAt(new DateTimeImmutable("now", new DateTimeZone("Europe/Paris")));
 
+            /*Recupere les fichiers passer par l'utilisateur et l'enregistre dans le dossier de l'application*/
             /** @var UploadedFile $files */
             $files = $messageForm->get('files')->getData();
             $files_url = [];
@@ -46,6 +50,7 @@ class SubjectController extends AbstractController
 
             $message->setFiles($files_url);
 
+            /*Enregistre le nouveau message dans la BDD */
             $em->persist($message);
             $em->flush();
 
